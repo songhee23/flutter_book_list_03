@@ -9,7 +9,15 @@ class ListScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('도서 목록 앱')
       ),
-      body: Container()
+      body: ListView(
+        children: [
+          ListTile(
+            autofocus: true,
+            title: Text('패키지...'),
+            leading:Image.network('https://..') ,
+            ),          
+        ],
+      )
     );
   }
 }
