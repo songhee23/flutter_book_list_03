@@ -1,23 +1,41 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_book_list_03/models/book.dart';
+import 'package:flutter_book_list_03/repositories/book_repository.dart';
+import 'package:flutter_book_list_03/screens/detail_screen.dart';
 
 class ListScreen extends StatelessWidget {
-
+  final List<Book> books = BookRepository().getBooks();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('도서 목록 앱')
+        title: Text('도서 목록 앱'),
       ),
-      body: ListView(
-        children: [
-          ListTile(
-            autofocus: true,
-            title: Text('패키지...'),
-            leading:Image.network('https://..') ,
-            ),          
-        ],
-      )
+      body: ListView.builder(
+        itemCount: books.length,
+        itemBuilder: (context, index) {
+          return BookTile(book: books[index]);
+        },
+      ),
+    );
+  }
+}
+
+class BookTile extends StatelessWidget {
+  final Book book;
+  BookTile({required this.book});
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(book.title),
+      leading: Image.network(book.image),
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => DetailScreen(
+            book: book,
+          ),
+        ));
+      },
     );
   }
 }
